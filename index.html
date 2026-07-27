@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C&amp;N Odontología · Ciudadela — Odontología con precisión de galería</title>
+<meta name="description" content="Odontología general y estética para toda la familia en Ciudadela, a media cuadra de la Estación. Turnos por WhatsApp, lunes a sábados de 9:30 a 19:00." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..800&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET & TOKENS ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0f0f13;--ink-2:#191920;--ink-3:#2a2a33;
+  --bone:#f6f4ee;--bone-2:#eeebe1;--paper:#faf8f2;
+  --accent:#29e0a8;      /* ← cambiar a #ff6a4d para versión coral */
+  --accent-deep:#12b98a;
+  --muted:#6f6f78;--muted-bone:rgba(246,244,238,.6);
+  --line:rgba(15,15,19,.14);--line-2:rgba(15,15,19,.08);--line-bone:rgba(246,244,238,.16);
+  --ease:cubic-bezier(.22,1,.36,1);--ease-2:cubic-bezier(.16,1,.3,1);
+  --maxw:1280px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-weight:400}
+::selection{background:var(--accent);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+h1,h2,h3{font-family:'Bodoni Moda',serif;font-weight:500;line-height:.98;letter-spacing:-.01em}
+.it{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.label{display:inline-flex;align-items:center;gap:10px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.28em;font-weight:600;color:var(--muted)}
+.label::before{content:"";width:26px;height:1px;background:var(--accent)}
+.label.on-dark{color:var(--muted-bone)}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.028;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ============ PRELOADER ============ */
+.loader{position:fixed;inset:0;z-index:300;background:var(--ink);display:grid;place-items:center;
+  transition:transform 1s var(--ease);}
+.loader.done{transform:translateY(-101%)}
+.loader .lmk{font-family:'Bodoni Moda',serif;font-size:clamp(48px,9vw,96px);font-weight:500;color:var(--bone);
+  letter-spacing:-.02em;overflow:hidden;display:flex;gap:.05em}
+.loader .lmk span{display:inline-block;transform:translateY(110%);animation:lup .8s var(--ease) forwards}
+.loader .lmk .amp{font-style:italic;color:var(--accent)}
+.loader .lmk span:nth-child(2){animation-delay:.08s}.loader .lmk span:nth-child(3){animation-delay:.16s}
+.loader .lbar{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);width:0;animation:lbar 1s var(--ease) forwards .1s}
+@keyframes lup{to{transform:none}}@keyframes lbar{to{width:100%}}
+
+/* ============ SCROLL PROGRESS ============ */
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;
+  background:var(--accent);z-index:85;transition:transform .1s linear}
+
+/* ============ CUSTOM CURSOR ============ */
+.cur,.cur-dot{position:fixed;top:0;left:0;pointer-events:none;z-index:200;border-radius:50%;
+  mix-blend-mode:difference;will-change:transform}
+.cur{width:38px;height:38px;border:1px solid #fff;margin:-19px 0 0 -19px;transition:width .3s var(--ease),height .3s var(--ease),margin .3s var(--ease),opacity .3s}
+.cur-dot{width:5px;height:5px;background:#fff;margin:-2.5px 0 0 -2.5px}
+body.cur-hover .cur{width:64px;height:64px;margin:-32px 0 0 -32px}
+body.cur-hover .cur-dot{opacity:0}
+@media(hover:none),(pointer:coarse){.cur,.cur-dot{display:none}}
+
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:70;display:flex;justify-content:center;padding:20px 20px 0;
+  transition:transform .55s var(--ease)}
+.nav.hide{transform:translateY(-140%)}
+.nav-bar{display:flex;align-items:center;gap:32px;width:min(1200px,100%);padding:13px 13px 13px 24px;
+  background:rgba(250,248,242,.72);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);
+  border:1px solid rgba(15,15,19,.08);box-shadow:0 10px 40px -22px rgba(15,15,19,.5)}
+.brand{display:flex;align-items:baseline;gap:11px}
+.brand .mk{font-family:'Bodoni Moda',serif;font-weight:600;font-size:23px;letter-spacing:-.02em;line-height:1}
+.brand .mk .amp{font-style:italic;color:var(--accent-deep)}
+.brand .sub{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.nav-links{display:flex;gap:2px;margin-left:auto}
+.nav-links a{font-size:13.5px;font-weight:500;color:var(--muted);padding:9px 14px;position:relative;transition:color .4s var(--ease)}
+.nav-links a::after{content:"";position:absolute;left:14px;right:14px;bottom:5px;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nav-links a:hover{color:var(--ink)}.nav-links a:hover::after{transform:scaleX(1)}
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;font-weight:600;font-size:13.5px;
+  font-family:'Hanken Grotesk';padding:11px 12px 11px 20px;cursor:pointer;border:none;will-change:transform;
+  transition:transform .35s var(--ease),box-shadow .5s var(--ease),background .4s var(--ease),color .4s var(--ease)}
+.btn .ico{width:30px;height:30px;display:grid;place-items:center;flex:none;transition:transform .5s var(--ease),background .4s var(--ease)}
+.btn:hover .ico{transform:translate(2px,-2px)}.btn:active{transform:scale(.97)}
+.btn-accent{background:var(--accent);color:var(--ink)}.btn-accent .ico{background:rgba(15,15,19,.12)}
+.btn-accent:hover{box-shadow:0 16px 34px -16px var(--accent-deep)}
+.btn-ink{background:var(--ink);color:var(--bone)}.btn-ink .ico{background:rgba(246,244,238,.14)}.btn-ink:hover{background:#000}
+.btn-out{background:transparent;color:var(--ink);border:1px solid var(--line);padding:11px 22px}
+.btn-out:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.btn-out.on-dark{color:var(--bone);border-color:var(--line-bone)}.btn-out.on-dark:hover{background:var(--bone);color:var(--ink)}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line);background:transparent;cursor:pointer;position:relative}
+.burger span{position:absolute;left:12px;width:20px;height:1.5px;background:var(--ink);transition:transform .5s var(--ease),opacity .3s}
+.burger span:nth-child(1){top:18px}.burger span:nth-child(2){top:24px}
+body.menu-open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:translateY(0) rotate(-45deg)}
+.overlay{position:fixed;inset:0;z-index:65;background:rgba(15,15,19,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;justify-content:center;gap:4px;padding:44px 34px;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s}
+body.menu-open .overlay{opacity:1;visibility:visible}
+.overlay a{font-family:'Bodoni Moda',serif;font-size:clamp(40px,12vw,72px);color:var(--bone);font-weight:400;line-height:1.15;
+  transform:translateY(28px);opacity:0;transition:transform .7s var(--ease),opacity .7s var(--ease),color .3s}
+.overlay a:hover{color:var(--accent)}
+body.menu-open .overlay a{transform:none;opacity:1}
+body.menu-open .overlay a:nth-child(1){transition-delay:.06s}body.menu-open .overlay a:nth-child(2){transition-delay:.12s}
+body.menu-open .overlay a:nth-child(3){transition-delay:.18s}body.menu-open .overlay a:nth-child(4){transition-delay:.24s}
+body.menu-open .overlay a:nth-child(5){transition-delay:.3s}
+
+/* ============ HERO ============ */
+.hero{padding:172px 0 70px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line-2) 1px,transparent 1px),linear-gradient(90deg,var(--line-2) 1px,transparent 1px);
+  background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000,transparent 75%)}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.42fr .58fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(40px,6.1vw,86px);font-weight:500;margin:24px 0 0;letter-spacing:-.025em}
+.hero h1 .it{color:var(--accent-deep)}
+.hero h1 .stroke{-webkit-text-stroke:1.4px var(--ink);color:transparent;font-style:italic;font-weight:400}
+.ln{display:block;overflow:hidden;padding-bottom:.04em}
+.ln>span{display:block;transform:translateY(112%);transition:transform 1s var(--ease)}
+body.ready .ln>span{transform:none}
+body.ready [data-heroin]{opacity:1!important;transform:none!important}
+.hero h1 .ln:nth-child(2)>span{transition-delay:.09s}.hero h1 .ln:nth-child(3)>span{transition-delay:.18s}
+.hero-sub{display:flex;gap:40px;align-items:flex-start;margin-top:38px;flex-wrap:wrap;position:relative;z-index:1}
+.hero-sub p{font-size:17px;color:var(--muted);max-width:40ch;line-height:1.6;opacity:0;transform:translateY(20px);transition:all .9s var(--ease) .35s}
+body.ready .hero-sub p{opacity:1;transform:none}
+.hero-cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;align-items:center;position:relative;z-index:1;
+  opacity:0;transform:translateY(20px);transition:all .9s var(--ease) .5s}
+body.ready .hero-cta{opacity:1;transform:none}
+/* rotating badge */
+.hero-badge{position:relative;width:96px;height:96px;flex:none;display:grid;place-items:center;margin-left:6px}
+.hero-badge .spin{position:absolute;inset:0;animation:spin 14s linear infinite}
+.hero-badge text{font-family:'Hanken Grotesk';font-size:9.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;fill:var(--ink)}
+.hero-badge .bico{width:34px;height:34px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.hero-badge .bico svg{width:17px;height:17px;color:var(--ink)}
+.hero-badge:hover .bico{transform:scale(1.08)}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* side panel */
+.hero-side{opacity:0;transform:translateY(24px);transition:all 1s var(--ease) .55s}
+body.ready .hero-side{opacity:1;transform:none}
+.hs-card{background:rgba(255,255,255,.5);border:1px solid var(--line);padding:24px 26px 24px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 40px 80px -46px rgba(15,15,19,.4),inset 0 1px 0 rgba(255,255,255,.6)}
+.hs-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;margin-bottom:4px;border-bottom:1px solid var(--line-2)}
+.hs-status{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--ink)}
+.hs-status i{width:8px;height:8px;border-radius:50%;background:var(--accent-deep);position:relative;flex:none}
+.hs-status i::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent-deep);opacity:.6;animation:pulse 2.2s var(--ease) infinite}
+.hs-status.closed{color:var(--muted)}.hs-status.closed i{background:#c0564b}.hs-status.closed i::after{border-color:#c0564b}
+@keyframes pulse{to{transform:scale(2);opacity:0}}
+.hs-mk{font-family:'Bodoni Moda',serif;font-size:19px;font-weight:600;letter-spacing:-.01em}.hs-mk .amp{font-style:italic;color:var(--accent-deep)}
+.hs-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:15px 0;border-bottom:1px solid var(--line-2)}
+.hs-row .k{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);font-weight:600;flex:none;padding-top:3px}
+.hs-row .v{font-family:'Bodoni Moda',serif;font-size:19px;font-weight:500;text-align:right;line-height:1.15}
+.hs-row .v small{font-family:'Hanken Grotesk';font-size:12px;color:var(--muted);font-weight:500}
+.hs-cta{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  background:var(--ink);color:var(--bone);padding:15px 16px 15px 20px;font-size:13.5px;font-weight:600;transition:background .4s var(--ease),transform .4s var(--ease)}
+.hs-cta:hover{background:#000}
+.hs-cta .c{width:28px;height:28px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none;transition:transform .5s var(--ease)}
+.hs-cta:hover .c{transform:translateX(3px)}
+.hs-cta .c svg{width:14px;height:14px;color:var(--ink)}
+.scrollcue{position:absolute;left:32px;bottom:24px;z-index:1;display:flex;align-items:center;gap:11px;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.24em;color:var(--muted);font-weight:600}
+.scrollcue .bar{width:1px;height:34px;background:var(--line);position:relative;overflow:hidden}
+.scrollcue .bar::after{content:"";position:absolute;top:-34px;left:0;width:1px;height:34px;background:var(--ink);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{to{top:34px}}
+
+/* ============ STATEMENT BAND ============ */
+.statement{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:64px 0;text-align:center}
+.statement p{font-family:'Bodoni Moda',serif;font-size:clamp(28px,4.4vw,58px);font-weight:500;line-height:1.08;letter-spacing:-.02em;max-width:20ch;margin:0 auto}
+.statement p .it{color:var(--accent-deep)}
+
+/* ============ STATS ============ */
+.stats{background:var(--ink);color:var(--bone)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:60px 30px 56px 0;border-right:1px solid var(--line-bone);position:relative}
+.stat:last-child{border-right:none}
+.stat .num{font-family:'Bodoni Moda',serif;font-size:clamp(52px,6vw,88px);font-weight:500;line-height:1;color:var(--bone);letter-spacing:-.03em}
+.stat .num .u{color:var(--accent);font-family:'Hanken Grotesk';font-size:.26em;font-weight:600;letter-spacing:.02em;vertical-align:.9em;margin-left:.08em}
+.stat .cap{font-size:13.5px;color:var(--muted-bone);margin-top:16px;max-width:20ch;line-height:1.45}
+
+/* ============ SECTION ============ */
+.sec{padding:120px 0}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:66px}
+.sec-head h2{font-size:clamp(38px,5.5vw,74px);font-weight:500;margin-top:22px}
+.sec-head h2 .it{color:var(--accent-deep)}
+.sec-head .lead{font-size:17px;color:var(--muted);max-width:44ch;line-height:1.6;padding-bottom:8px}
+
+/* ============ EXPLORER (dark) ============ */
+.services{background:var(--ink);color:var(--bone)}
+.services .sec-head h2{color:var(--bone)}.services .sec-head .lead{color:var(--muted-bone)}
+.explorer{display:grid;grid-template-columns:0.9fr 1.6fr;gap:28px;align-items:start}
+.ex-list{display:flex;flex-direction:column;border-top:1px solid var(--line-bone)}
+.ex-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;background:transparent;border:none;
+  border-bottom:1px solid var(--line-bone);padding:20px 6px;cursor:pointer;text-align:left;color:var(--bone);width:100%;
+  font-family:'Hanken Grotesk';position:relative;transition:padding .5s var(--ease)}
+.ex-item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease)}
+.ex-item .exn{font-family:'Bodoni Moda',serif;font-size:15px;color:var(--muted-bone);transition:color .4s var(--ease)}
+.ex-item .ext{font-size:17px;font-weight:500;color:var(--muted-bone);transition:color .4s var(--ease)}
+.ex-item .exar{width:30px;height:30px;display:grid;place-items:center;color:var(--muted-bone);opacity:0;transform:translateX(-6px);transition:all .5s var(--ease)}
+.ex-item .exar svg{width:18px;height:18px}
+.ex-item:hover{padding-left:14px}.ex-item:hover .ext{color:var(--bone)}
+.ex-item.active{padding-left:16px}.ex-item.active::before{transform:scaleY(1)}
+.ex-item.active .exn{color:var(--accent)}.ex-item.active .ext{color:var(--bone);font-weight:600}
+.ex-item.active .exar{opacity:1;transform:none;color:var(--accent)}
+.ex-stage{position:relative}
+.ex-panel{display:none;grid-template-columns:1fr;background:var(--ink-2);border:1px solid var(--line-bone);overflow:hidden}
+.ex-panel.active{display:grid;animation:fadePanel .6s var(--ease-2)}
+@keyframes fadePanel{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ex-photo{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#20202a,#14141a 55%,#0d0d12);
+  display:flex;align-items:flex-end;padding:22px;isolation:isolate}
+.ex-photo[style*="background-image"]{background-size:cover;background-position:center}
+.ex-photo .ph-tooth{position:absolute;right:-20px;top:50%;transform:translateY(-50%);width:230px;color:rgba(41,224,168,.07);z-index:0}
+.ex-photo .ph-n{position:absolute;top:20px;right:26px;font-family:'Bodoni Moda',serif;font-size:60px;font-weight:500;color:rgba(246,244,238,.09);z-index:0;line-height:1}
+.ex-photo .ph-lbl{position:relative;z-index:1;font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:600;
+  color:var(--muted-bone);background:rgba(15,15,19,.5);border:1px solid var(--line-bone);padding:7px 13px;backdrop-filter:blur(6px)}
+.ex-body{padding:34px 36px 38px}
+.ex-body h3{font-size:clamp(30px,3.6vw,46px);font-weight:500;color:var(--bone);margin:16px 0 16px}
+.ex-body h3 .it{color:var(--accent)}
+.ex-body p{font-size:16px;color:var(--muted-bone);line-height:1.65;max-width:56ch}
+.ex-tags{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 30px}
+.ex-tags span{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--bone);padding:8px 15px;border:1px solid var(--line-bone);border-radius:999px}
+
+/* ============ BEFORE / AFTER ============ */
+.beforeafter{background:var(--bone)}
+.ba-wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
+.ba-copy h2{font-size:clamp(34px,4.6vw,60px);margin:20px 0 18px}.ba-copy h2 .it{color:var(--accent-deep)}
+.ba-copy p{font-size:16.5px;color:var(--muted);line-height:1.65;max-width:42ch;margin-bottom:24px}
+.ba-hint{display:inline-flex;align-items:center;gap:10px;font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:600;color:var(--ink)}
+.ba-hint svg{width:18px;height:18px;color:var(--accent-deep)}
+.ba{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--line);cursor:ew-resize;user-select:none;--pos:50%;
+  box-shadow:0 40px 80px -44px rgba(15,15,19,.5)}
+.ba-layer{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
+.ba-before{background:radial-gradient(circle at 50% 40%,#efe6cf,#d9cba7)}
+.ba-after{background:radial-gradient(circle at 50% 40%,#ffffff,#eef4f1);clip-path:inset(0 0 0 var(--pos))}
+.ba-layer[style*="background-image"]{background-size:cover;background-position:center}
+.ba-tooth{width:44%;filter:drop-shadow(0 20px 30px rgba(0,0,0,.12))}
+.ba-before .ba-tooth path{fill:#e4d3a6}.ba-before .ba-tooth .shine{fill:#d8c48c}
+.ba-after .ba-tooth path{fill:#fff}.ba-after .ba-tooth .shine{fill:var(--accent)}
+.ba-tag{position:absolute;top:16px;font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:700;
+  padding:7px 13px;background:rgba(15,15,19,.72);color:var(--bone);z-index:3}
+.ba-before .ba-tag{left:16px}.ba-after .ba-tag{right:16px;background:var(--accent);color:var(--ink)}
+.ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:var(--bone);z-index:4;transform:translateX(-1px)}
+.ba-handle::after{content:"";position:absolute;top:50%;left:50%;width:52px;height:52px;transform:translate(-50%,-50%);
+  border-radius:50%;background:var(--bone);box-shadow:0 8px 24px -6px rgba(0,0,0,.5);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%230f0f13' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 7 3 12l5 5M16 7l5 5-5 5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+
+/* ============ WHY ============ */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.val{padding:36px 26px 30px 0;border-right:1px solid var(--line-2);position:relative}
+.val:last-child{border-right:none}
+.val .big{font-family:'Bodoni Moda',serif;font-size:56px;font-weight:500;line-height:1;letter-spacing:-.03em}
+.val .big em{font-style:italic;color:var(--accent-deep)}
+.val h3{font-size:20px;font-weight:600;font-family:'Hanken Grotesk';margin:24px 0 10px}
+.val p{font-size:14px;color:var(--muted);line-height:1.55;max-width:26ch}
+.val .dot{position:absolute;top:44px;right:20px;width:7px;height:7px;background:var(--accent);border-radius:50%;opacity:0;transition:opacity .5s var(--ease)}
+.val:hover .dot{opacity:1}
+
+/* ============ TESTIMONIALS ============ */
+.testi{background:var(--ink);color:var(--bone)}
+.testi .sec-head h2{color:var(--bone)}.testi .sec-head .lead{color:var(--muted-bone)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{border:1px solid var(--line-bone);padding:34px 30px;display:flex;flex-direction:column;transition:border-color .5s var(--ease),transform .6s var(--ease)}
+.tcard:hover{border-color:var(--accent);transform:translateY(-6px)}
+.tcard .stars{display:flex;gap:3px;color:var(--accent);margin-bottom:20px}
+.tcard .stars svg{width:16px;height:16px}
+.tcard blockquote{font-family:'Bodoni Moda',serif;font-size:21px;line-height:1.4;color:var(--bone);font-weight:400;margin-bottom:26px}
+.tcard .who{margin-top:auto;display:flex;align-items:center;gap:13px}
+.tcard .av{width:42px;height:42px;border-radius:50%;background:var(--ink-3);display:grid;place-items:center;font-family:'Bodoni Moda',serif;font-size:17px;color:var(--accent);flex:none}
+.tcard .who b{display:block;font-size:14.5px;color:var(--bone);font-weight:600}
+.tcard .who span{font-size:12.5px;color:var(--muted-bone)}
+
+/* ============ VISIT ============ */
+.visit{background:var(--bone)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.hours-card{background:var(--ink);color:var(--bone);padding:48px 44px;display:flex;flex-direction:column}
+.hours-card h2{font-size:44px;font-weight:500;color:var(--bone);margin:18px 0 32px}
+.hours{border-top:1px solid var(--line-bone)}
+.hrow{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line-bone)}
+.hrow .d{font-size:16px;font-weight:500}
+.hrow .h{font-family:'Bodoni Moda',serif;font-size:22px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.hrow.off .h{color:var(--muted-bone);font-style:italic;font-size:18px}
+.addr{display:flex;gap:16px;margin:34px 0 26px;padding-top:26px;border-top:1px solid var(--line-bone)}
+.addr .ic{width:46px;height:46px;border:1px solid var(--line-bone);display:grid;place-items:center;flex:none}
+.addr .ic svg{width:20px;height:20px;color:var(--accent)}
+.addr .v{font-family:'Bodoni Moda',serif;font-size:20px;font-weight:500;color:var(--bone)}
+.addr .s{font-size:13.5px;color:var(--muted-bone);margin-top:3px}
+.hours-card .btn{margin-top:auto}
+.map-shell{position:relative;min-height:480px;border:1px solid var(--line);overflow:hidden}
+.map-shell iframe{width:100%;height:100%;min-height:480px;border:0;filter:grayscale(1) contrast(1.1) brightness(.98)}
+.map-tag{position:absolute;top:22px;left:22px;background:var(--bone);padding:12px 16px;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;display:flex;align-items:center;gap:9px;box-shadow:0 12px 30px -14px rgba(0,0,0,.4)}
+.map-tag svg{width:15px;height:15px;color:var(--accent-deep)}
+
+/* ============ FAQ ============ */
+.faq-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start}
+.faq-list{border-top:1px solid var(--line)}
+.faq{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:26px 6px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  font-family:'Bodoni Moda',serif;font-size:clamp(20px,2.4vw,27px);font-weight:500;transition:color .4s var(--ease)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--accent-deep)}
+.faq .pl{width:30px;height:30px;flex:none;position:relative}
+.faq .pl::before,.faq .pl::after{content:"";position:absolute;top:50%;left:50%;background:var(--ink);transition:transform .4s var(--ease),background .4s}
+.faq .pl::before{width:14px;height:1.6px;transform:translate(-50%,-50%)}
+.faq .pl::after{width:1.6px;height:14px;transform:translate(-50%,-50%)}
+.faq[open] .pl::after{transform:translate(-50%,-50%) scaleY(0)}
+.faq[open] summary{color:var(--accent-deep)}
+.faq .ans{overflow:hidden;max-height:0;transition:max-height .5s var(--ease)}
+.faq[open] .ans{max-height:240px}
+.faq .ans p{padding:0 6px 28px;font-size:16px;color:var(--muted);line-height:1.65;max-width:52ch}
+
+/* ============ FINAL ============ */
+.final{background:var(--ink);color:var(--bone);text-align:center;padding:130px 0;position:relative;overflow:hidden}
+.final .glow{position:absolute;left:50%;bottom:-40%;transform:translateX(-50%);width:80vw;height:80vw;
+  background:radial-gradient(circle,rgba(41,224,168,.16),transparent 60%);pointer-events:none}
+.final h2{position:relative;font-size:clamp(40px,6vw,84px);font-weight:500;color:var(--bone);margin:26px 0 14px}
+.final h2 .it{color:var(--accent)}
+.final p{position:relative;color:var(--muted-bone);font-size:18px;margin-bottom:46px}
+.phone{position:relative;display:inline-flex;align-items:center;gap:26px;font-family:'Bodoni Moda',serif;
+  font-size:clamp(42px,8vw,104px);font-weight:500;color:var(--accent);letter-spacing:-.03em;transition:transform .5s var(--ease)}
+.phone:hover{transform:scale(1.015)}
+.phone .wa{width:clamp(60px,8vw,104px);height:clamp(60px,8vw,104px);border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none;transition:transform .5s var(--ease)}
+.phone:hover .wa{transform:rotate(-8deg)}.phone .wa svg{width:52%;height:52%;color:var(--ink)}
+
+/* ============ FOOTER ============ */
+footer{background:#08080b;color:var(--muted-bone);padding:80px 0 34px}
+.foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;padding-bottom:50px;border-bottom:1px solid var(--line-bone)}
+.foot-mk{font-family:'Bodoni Moda',serif;font-size:32px;color:var(--bone);font-weight:600;margin-bottom:16px}
+.foot-mk .amp{font-style:italic;color:var(--accent)}
+.foot-top p{font-size:14px;line-height:1.7;max-width:34ch}
+.foot-col h4{color:var(--bone);font-size:11px;text-transform:uppercase;letter-spacing:.2em;margin-bottom:18px;font-weight:600}
+.foot-col a,.foot-col span{display:block;font-size:14px;margin-bottom:11px;transition:color .4s var(--ease)}
+.foot-col a:hover{color:var(--accent)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:12.5px;flex-wrap:wrap;gap:12px}
+.foot-bottom span{color:rgba(246,244,238,.4)}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(38px);filter:blur(5px);transition:opacity .9s var(--ease-2),transform .9s var(--ease-2),filter .9s var(--ease-2)}
+.reveal.in{opacity:1;transform:none;filter:none}
+.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}
+.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}
+
+/* progressive enhancement — if JS never runs, show everything */
+html:not(.js) .loader{display:none}
+html:not(.js) .reveal{opacity:1;transform:none;filter:none}
+html:not(.js) .ln>span{transform:none}
+html:not(.js) .hero-sub p,html:not(.js) .hero-cta,html:not(.js) .hero-side,html:not(.js) [data-heroin]{opacity:1!important;transform:none!important}
+html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:960px){
+  .nav-links{display:none}.nav-bar .btn-accent{display:none}.burger{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:44px}.hero{padding:140px 0 46px}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .stats-grid{grid-template-columns:1fr 1fr}.stat{border-bottom:1px solid var(--line-bone)}
+  .stat:nth-child(odd){border-right:1px solid var(--line-bone)}.stat:nth-child(even){border-right:none}
+  .explorer{grid-template-columns:1fr;gap:22px}
+  .ex-list{display:grid;grid-template-columns:1fr 1fr;border-top:none}.ex-item{border:1px solid var(--line-bone)}.ex-item .ext{font-size:15px}
+  .ba-wrap{grid-template-columns:1fr;gap:30px}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .val{border-right:none;border-bottom:1px solid var(--line-2);padding-right:0}
+  .val:nth-child(odd){border-right:1px solid var(--line-2);padding-right:26px}
+  .testi-grid{grid-template-columns:1fr}
+  .visit-grid{grid-template-columns:1fr}
+  .faq-wrap{grid-template-columns:1fr;gap:8px}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .scrollcue{display:none}
+}
+@media(max-width:600px){
+  .wrap{padding:0 20px}.sec{padding:80px 0}
+  .hero-sub{gap:24px}
+  .stats-grid{grid-template-columns:1fr}.stat{border-right:none!important;padding:40px 0}
+  .ex-list{grid-template-columns:1fr}.ex-body{padding:26px 22px 32px}
+  .why-grid{grid-template-columns:1fr}.val,.val:nth-child(odd){border-right:none;padding-right:0}
+  .hours-card{padding:36px 26px}.foot-top{grid-template-columns:1fr}
+  .hero-cta{flex-direction:column;align-items:stretch}.hero-cta .btn{justify-content:space-between}
+  .hero-badge{align-self:flex-start;margin:6px 0 0}
+  .final{padding:90px 0}.statement{padding:48px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important;transition-duration:.001s!important}
+  .loader{display:none}.ln>span{transform:none}.hero-sub p,.hero-cta,.hero-side{opacity:1;transform:none}
+  .reveal{opacity:1;transform:none;filter:none}.cur,.cur-dot{display:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+<div class="loader" id="loader"><div class="lmk"><span>C</span><span class="amp">&amp;</span><span>N</span></div><div class="lbar"></div></div>
+<div class="progress" id="progress"></div>
+<div class="grain"></div>
+<div class="cur" id="cur"></div><div class="cur-dot" id="curDot"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-bar">
+    <a href="#top" class="brand" data-cur><span class="mk">C<span class="amp">&amp;</span>N</span><span class="sub">Odontología</span></a>
+    <div class="nav-links">
+      <a href="#servicios" data-cur>Servicios</a>
+      <a href="#nosotros" data-cur>Nosotros</a>
+      <a href="#opiniones" data-cur>Opiniones</a>
+      <a href="#visita" data-cur>Visitanos</a>
+    </div>
+    <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555" target="_blank" rel="noopener">Reservar turno
+      <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+    <button class="burger" id="burger" aria-label="Menú" data-cur><span></span><span></span></button>
+  </div>
+</nav>
+<div class="overlay" id="overlay">
+  <a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#opiniones">Opiniones</a><a href="#visita">Visitanos</a>
+  <a href="https://wa.me/5491131552555" target="_blank" rel="noopener">Reservar <span class="it">turno</span></a>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="label" style="display:inline-flex;opacity:0;transform:translateY(14px);transition:all .8s var(--ease) .15s" data-heroin>Odontología en Ciudadela</span>
+        <h1><span class="ln"><span>Odontología</span></span><span class="ln"><span>con <span class="it">precisión</span></span></span><span class="ln"><span><span class="stroke">de galería.</span></span></span></h1>
+        <div class="hero-sub"><p>Tratamientos generales y estéticos para toda la familia, a media cuadra de la Estación Ciudadela. Turnos por WhatsApp, atención de niños y adultos particulares.</p></div>
+        <div class="hero-cta">
+          <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555" target="_blank" rel="noopener">Reservar por WhatsApp
+            <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.16c-.25.7-1.45 1.33-2 1.41-.53.08-1.19.11-1.92-.12-.44-.14-1.01-.33-1.74-.64-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17 0-1.51.79-2.25 1.07-2.56.28-.31.61-.38.81-.38.2 0 .41 0 .58.01.19.01.44-.07.68.52.25.6.85 2.11.92 2.26.08.15.13.32.03.52-.1.2-.15.32-.3.5-.15.18-.31.39-.44.53-.15.15-.3.31-.13.61.17.3.77 1.27 1.65 2.06 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.76.83 2.06.98.3.15.5.22.58.35.07.12.07.72-.18 1.42Z"/></svg></span></a>
+          <a class="btn btn-out" data-cur href="#servicios">Ver servicios</a>
+          <a class="hero-badge" data-cur href="https://wa.me/5491131552555" target="_blank" rel="noopener" aria-label="Reservá tu turno">
+            <svg class="spin" viewBox="0 0 96 96"><defs><path id="cp" d="M48,48 m-34,0 a34,34 0 1,1 68,0 a34,34 0 1,1 -68,0"/></defs><text><textPath href="#cp" startOffset="0">RESERVÁ TU TURNO · C&amp;N ODONTOLOGÍA · </textPath></text></svg>
+            <span class="bico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm3.42 13.38c-.18.5-1.04.95-1.43 1.01-.38.05-.85.08-1.37-.09-.32-.1-.72-.23-1.24-.46-2.19-.94-3.62-3.14-3.73-3.29-.1-.14-.89-1.18-.89-2.26s.56-1.6.77-1.82c.2-.22.44-.28.58-.28h.42c.13 0 .31-.05.49.37.18.43.61 1.5.66 1.61.05.11.09.24.02.37-.07.14-.11.22-.21.35l-.31.36c-.1.1-.21.22-.09.43.12.21.55.9 1.18 1.47.81.72 1.49.94 1.7 1.05.21.11.34.09.46-.05.13-.14.53-.62.67-.83.14-.21.29-.18.49-.11.2.07 1.25.59 1.46.7.21.11.36.16.41.25.05.09.05.51-.13 1.01Z"/></svg></span>
+          </a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div class="hs-card">
+          <div class="hs-head">
+            <span class="hs-status" id="status"><i></i><span>Abierto ahora</span></span>
+            <span class="hs-mk">C<span class="amp">&amp;</span>N</span>
+          </div>
+          <div class="hs-row"><span class="k">Horarios</span><span class="v">Lun a Sáb<br><small>9:30 – 19:00 hs</small></span></div>
+          <div class="hs-row"><span class="k">Dirección</span><span class="v">Av. Maipú 3835<br><small>Ciudadela, Bs. As.</small></span></div>
+          <div class="hs-row"><span class="k">Atención</span><span class="v">Niños y adultos<br><small>particulares</small></span></div>
+          <a class="hs-cta" data-cur data-mag href="https://wa.me/5491131552555" target="_blank" rel="noopener">Escribinos por WhatsApp
+            <span class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div class="scrollcue"><span>Scroll</span><span class="bar"></span></div>
+</header>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="wrap reveal"><p>Cuidamos tu sonrisa <span class="it">como si fuera la nuestra.</span></p></div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="num" data-count="10" data-suf="+">0</div><div class="cap">Años cuidando las sonrisas del barrio</div></div>
+      <div class="stat reveal" data-d="1"><div class="num" data-count="8">0</div><div class="cap">Especialidades bajo un mismo techo</div></div>
+      <div class="stat reveal" data-d="2"><div class="num" data-count="6">0</div><div class="cap">Días de atención, de lunes a sábado</div></div>
+      <div class="stat reveal" data-d="3"><div class="num">1<span class="u">min</span></div><div class="cap">Caminando desde la Estación Ciudadela</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES / EXPLORER -->
+<section class="sec services" id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label on-dark reveal">Servicios · 08 especialidades</span>
+        <h2 class="reveal" data-d="1">Elegí tu tratamiento,<br><span class="it">mirá el detalle.</span></h2></div>
+      <p class="lead reveal" data-d="2">De un control de rutina a la alta complejidad. Tocá cada especialidad para ver la explicación, los beneficios y pedir tu turno al instante.</p>
+    </div>
+    <div class="explorer reveal" data-d="1">
+      <div class="ex-list">
+        <button class="ex-item active" data-cur data-i="0"><span class="exn">01</span><span class="ext">Odontología General</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="1"><span class="exn">02</span><span class="ext">Blanqueamiento</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="2"><span class="exn">03</span><span class="ext">Limpieza profesional</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="3"><span class="exn">04</span><span class="ext">Implantes</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="4"><span class="exn">05</span><span class="ext">Ortodoncia</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="5"><span class="exn">06</span><span class="ext">Endodoncia</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="6"><span class="exn">07</span><span class="ext">Cirugía de terceros molares</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        <button class="ex-item" data-cur data-i="7"><span class="exn">08</span><span class="ext">Operatoria</span><span class="exar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+      </div>
+      <div class="ex-stage">
+        <article class="ex-panel active" data-i="0">
+          <div class="ex-photo" data-img="images/tratamiento-general.jpg"><span class="ph-lbl">Foto · Odontología General</span><span class="ph-n">01</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 01</span><h3>Odontología <span class="it">General</span></h3>
+            <p>La base de todo. Controles periódicos, detección temprana de caries, cuidado de las encías y un plan a tu medida. Venís, revisamos todo con calma y salís con un diagnóstico claro y sin sorpresas.</p>
+            <div class="ex-tags"><span>Prevención</span><span>Diagnóstico</span><span>Control</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Quiero%20un%20turno%20de%20odontolog%C3%ADa%20general" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="1">
+          <div class="ex-photo" data-img="images/tratamiento-blanqueamiento.jpg"><span class="ph-lbl">Foto · Blanqueamiento</span><span class="ph-n">02</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 02</span><h3><span class="it">Blanqueamiento</span></h3>
+            <p>Aclaramos el tono de tus dientes de forma gradual y controlada, cuidando el esmalte y la sensibilidad. Ideal para renovar tu sonrisa antes de un evento o simplemente para verte mejor todos los días.</p>
+            <div class="ex-tags"><span>Estético</span><span>Seguro</span><span>Resultados visibles</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Me%20interesa%20un%20blanqueamiento" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="2">
+          <div class="ex-photo" data-img="images/tratamiento-limpieza.jpg"><span class="ph-lbl">Foto · Limpieza</span><span class="ph-n">03</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 03</span><h3><span class="it">Limpieza</span> profesional</h3>
+            <p>Removemos sarro, placa y manchas que el cepillado no llega a sacar. Una boca limpia previene caries, mal aliento y enfermedad de las encías. La recomendamos cada seis meses como hábito de cuidado.</p>
+            <div class="ex-tags"><span>Higiene</span><span>Prevención</span><span>Encías sanas</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Quiero%20una%20limpieza%20dental" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="3">
+          <div class="ex-photo" data-img="images/tratamiento-implantes.jpg"><span class="ph-lbl">Foto · Implantes</span><span class="ph-n">04</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 04</span><h3><span class="it">Implantes</span></h3>
+            <p>Reponemos piezas perdidas con un implante que funciona como raíz y una corona natural encima. Recuperás la mordida, la estética y la confianza para comer y sonreír sin pensarlo dos veces.</p>
+            <div class="ex-tags"><span>Fijo</span><span>Duradero</span><span>Natural</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Quiero%20informaci%C3%B3n%20sobre%20implantes" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="4">
+          <div class="ex-photo" data-img="images/tratamiento-ortodoncia.jpg"><span class="ph-lbl">Foto · Ortodoncia</span><span class="ph-n">05</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 05</span><h3><span class="it">Ortodoncia</span></h3>
+            <p>Corregimos la posición de los dientes y la mordida con brackets o alineadores, a la edad que sea. Además de una sonrisa alineada, mejora la masticación y hace mucho más fácil la higiene diaria.</p>
+            <div class="ex-tags"><span>Niños y adultos</span><span>Estético</span><span>Funcional</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Quiero%20consultar%20por%20ortodoncia" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="5">
+          <div class="ex-photo" data-img="images/tratamiento-endodoncia.jpg"><span class="ph-lbl">Foto · Endodoncia</span><span class="ph-n">06</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 06</span><h3><span class="it">Endodoncia</span></h3>
+            <p>Cuando la caries llega al nervio, hacemos el tratamiento de conducto para eliminar la infección, calmar el dolor y conservar tu diente natural en lugar de extraerlo. Con anestesia y el mayor cuidado.</p>
+            <div class="ex-tags"><span>Salva el diente</span><span>Sin dolor</span><span>Definitivo</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Tengo%20dolor%20y%20quiero%20consultar%20por%20endodoncia" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="6">
+          <div class="ex-photo" data-img="images/tratamiento-cirugia.jpg"><span class="ph-lbl">Foto · Cirugía de molares</span><span class="ph-n">07</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 07</span><h3>Cirugía de <span class="it">terceros molares</span></h3>
+            <p>Extraemos las muelas de juicio que no tienen lugar o generan dolor, infección o apiñamiento. Un procedimiento planificado, con anestesia e indicaciones claras para una recuperación tranquila en casa.</p>
+            <div class="ex-tags"><span>Planificado</span><span>Anestesia</span><span>Acompañamiento</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Necesito%20extraer%20una%20muela%20de%20juicio" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+        <article class="ex-panel" data-i="7">
+          <div class="ex-photo" data-img="images/tratamiento-operatoria.jpg"><span class="ph-lbl">Foto · Operatoria</span><span class="ph-n">08</span><svg class="ph-tooth" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/></svg></div>
+          <div class="ex-body"><span class="label on-dark">Tratamiento 08</span><h3><span class="it">Operatoria</span></h3>
+            <p>Reparamos dientes dañados por caries o fracturas con restauraciones estéticas del color de tu diente. Devolvemos forma, función y naturalidad — sin que se note que hubo un arreglo.</p>
+            <div class="ex-tags"><span>Estético</span><span>Restaurador</span><span>Natural</span></div>
+            <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555?text=Hola!%20Quiero%20consultar%20por%20una%20restauraci%C3%B3n" target="_blank" rel="noopener">Consultar por WhatsApp <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="sec beforeafter">
+  <div class="wrap">
+    <div class="ba-wrap">
+      <div class="ba-copy reveal">
+        <span class="label">Blanqueamiento</span>
+        <h2>Mirá la <span class="it">diferencia.</span></h2>
+        <p>Un blanqueamiento profesional levanta varios tonos el color de tus dientes, cuidando el esmalte. Arrastrá el control para ver el antes y el después.</p>
+        <span class="ba-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5M16 7l5 5-5 5"/></svg>Arrastrá para comparar</span>
+      </div>
+      <div class="ba reveal" data-d="1" id="ba">
+        <div class="ba-layer ba-before" data-img="images/blanqueamiento-antes.jpg"><span class="ba-tag">Antes</span>
+          <svg class="ba-tooth" viewBox="0 0 24 24"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/><ellipse class="shine" cx="9" cy="8" rx="1.6" ry="2.4"/></svg></div>
+        <div class="ba-layer ba-after" data-img="images/blanqueamiento-despues.jpg"><span class="ba-tag">Después</span>
+          <svg class="ba-tooth" viewBox="0 0 24 24"><path d="M12 2C9.5 2 8.2 3 6.5 3 4.9 3 3.5 4.2 3.5 6.6c0 2.6.8 4.1 1.6 6.9.6 2 .6 4.8 1.9 6.5.6.8 1.9.7 2.4-.3.7-1.4.7-3.3 1-4.6.2-.9.7-1.4 1.1-1.4s.9.5 1.1 1.4c.3 1.3.3 3.2 1 4.6.5 1 1.8 1.1 2.4.3 1.3-1.7 1.3-4.5 1.9-6.5.8-2.8 1.6-4.3 1.6-6.9 0-2.4-1.4-3.6-3-3.6-1.7 0-3-1-5.5-1Z"/><ellipse class="shine" cx="9" cy="8" rx="1.6" ry="2.4"/></svg></div>
+        <div class="ba-handle" id="baHandle"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec" id="nosotros">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label reveal">Por qué C&amp;N</span><h2 class="reveal" data-d="1">Un consultorio<br><span class="it">pensado para vos.</span></h2></div>
+      <p class="lead reveal" data-d="2">Cuidamos cada detalle para que tu visita sea simple, cercana y sin vueltas — desde el primer mensaje hasta el último control.</p>
+    </div>
+    <div class="why-grid">
+      <div class="val reveal"><span class="dot"></span><div class="big">0<em>1</em></div><h3>Turnos por WhatsApp</h3><p>Coordinás tu cita en minutos, sin llamadas eternas ni salas de espera.</p></div>
+      <div class="val reveal" data-d="1"><span class="dot"></span><div class="big">0<em>2</em></div><h3>Para toda la familia</h3><p>Atendemos niños y adultos particulares, con un trato cercano y sin apuros.</p></div>
+      <div class="val reveal" data-d="2"><span class="dot"></span><div class="big">0<em>3</em></div><h3>Trabajamos sin dolor</h3><p>Siempre con anestesia y el mayor cuidado para que estés cómodo de principio a fin.</p></div>
+      <div class="val reveal" data-d="3"><span class="dot"></span><div class="big">0<em>4</em></div><h3>A pasos del tren</h3><p>Av. Maipú 3835, a media cuadra de la Estación Ciudadela. Fácil de llegar.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec testi" id="opiniones">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label on-dark reveal">Opiniones</span><h2 class="reveal" data-d="1">Sonrisas que<br><span class="it">hablan por nosotros.</span></h2></div>
+      <p class="lead reveal" data-d="2">Lo que cuentan los pacientes que ya pasaron por el consultorio.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="tcard reveal">
+        <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg></div>
+        <blockquote>“Me hice el blanqueamiento y quedé chocha. Súper atentos y sin dolor en ningún momento.”</blockquote>
+        <div class="who"><span class="av">C</span><div><b>Carla M.</b><span>Blanqueamiento</span></div></div>
+      </div>
+      <div class="tcard reveal" data-d="1">
+        <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg></div>
+        <blockquote>“Llevo a mis dos hijos hace años. Con los chicos tienen una paciencia bárbara.”</blockquote>
+        <div class="who"><span class="av">D</span><div><b>Diego R.</b><span>Odontología infantil</span></div></div>
+      </div>
+      <div class="tcard reveal" data-d="2">
+        <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.6 5.9 20.4l1.4-6.8L2.2 9l6.9-.7L12 2z"/></svg></div>
+        <blockquote>“Me pusieron un implante y ni se nota. Todo bien explicado de principio a fin.”</blockquote>
+        <div class="who"><span class="av">S</span><div><b>Silvana T.</b><span>Implantes</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visita">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="label reveal">Visitanos</span><h2 class="reveal" data-d="1">Horarios <span class="it">&amp;</span> ubicación</h2></div>
+      <p class="lead reveal" data-d="2">Estamos a media cuadra de la Estación Ciudadela, sobre Av. Maipú. Escribinos y coordinamos el día y horario que mejor te quede.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="hours-card reveal">
+        <span class="label on-dark">Agenda</span><h2>Cuándo venir</h2>
+        <div class="hours">
+          <div class="hrow"><span class="d">Lunes a Viernes</span><span class="h">9:30 – 19:00</span></div>
+          <div class="hrow"><span class="d">Sábados</span><span class="h">9:30 – 19:00</span></div>
+          <div class="hrow off"><span class="d">Domingos</span><span class="h">Cerrado</span></div>
+        </div>
+        <div class="addr"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <div><div class="v">Av. Maipú 3835, Ciudadela</div><div class="s">Buenos Aires · A media cuadra de la Estación Ciudadela</div></div></div>
+        <a class="btn btn-accent" data-cur data-mag href="https://wa.me/5491131552555" target="_blank" rel="noopener">Agendar mi cita <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+      </div>
+      <div class="map-shell reveal" data-d="1">
+        <div class="map-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Av. Maipú 3835 · Ciudadela</div>
+        <iframe loading="lazy" title="Mapa C&N Odontología" src="https://maps.google.com/maps?q=Av.%20Maip%C3%BA%203835%2C%20Ciudadela%2C%20Buenos%20Aires&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="faq-wrap">
+      <div><span class="label reveal">Preguntas frecuentes</span><h2 class="sec-head-h reveal" data-d="1" style="font-size:clamp(34px,4.6vw,58px);margin-top:22px">Antes de<br><span class="it">reservar.</span></h2></div>
+      <div class="faq-list reveal" data-d="1">
+        <details class="faq"><summary>¿Atienden por obra social o prepaga?<span class="pl"></span></summary><div class="ans"><p>Somos un consultorio de atención particular. Escribinos por WhatsApp y te pasamos los valores de cada tratamiento, sin compromiso.</p></div></details>
+        <details class="faq"><summary>¿Necesito turno o puedo ir directo?<span class="pl"></span></summary><div class="ans"><p>Trabajamos con turno para atenderte sin esperas. Escribinos al 11-3155-2555 y lo coordinamos en el día y horario que te quede mejor.</p></div></details>
+        <details class="faq"><summary>¿Atienden niños?<span class="pl"></span></summary><div class="ans"><p>Sí, atendemos niños y adultos. Tenemos experiencia y mucha paciencia para que los más chicos se sientan cómodos y sin miedo.</p></div></details>
+        <details class="faq"><summary>¿Los tratamientos duelen?<span class="pl"></span></summary><div class="ans"><p>Trabajamos siempre con anestesia y el mayor cuidado para que estés cómodo en todo momento. Tu tranquilidad es parte del tratamiento.</p></div></details>
+        <details class="faq"><summary>¿Dónde quedan y cómo llego?<span class="pl"></span></summary><div class="ans"><p>En Av. Maipú 3835, Ciudadela, a media cuadra de la Estación Ciudadela. Llegás caminando desde el tren en menos de un minuto.</p></div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="glow"></div>
+  <div class="wrap">
+    <span class="label on-dark reveal" style="justify-content:center">Agendá tu cita</span>
+    <h2 class="reveal" data-d="1">Tu mejor sonrisa<br>empieza <span class="it">hoy.</span></h2>
+    <p class="reveal" data-d="2">Escribinos por WhatsApp y coordinamos tu turno al instante.</p>
+    <a class="phone reveal" data-d="3" data-cur href="https://wa.me/5491131552555" target="_blank" rel="noopener">
+      <span class="wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.16c-.25.7-1.45 1.33-2 1.41-.53.08-1.19.11-1.92-.12-.44-.14-1.01-.33-1.74-.64-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17 0-1.51.79-2.25 1.07-2.56.28-.31.61-.38.81-.38.2 0 .41 0 .58.01.19.01.44-.07.68.52.25.6.85 2.11.92 2.26.08.15.13.32.03.52-.1.2-.15.32-.3.5-.15.18-.31.39-.44.53-.15.15-.3.31-.13.61.17.3.77 1.27 1.65 2.06 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.76.83 2.06.98.3.15.5.22.58.35.07.12.07.72-.18 1.42Z"/></svg></span>
+      11-3155-2555
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div><div class="foot-mk">C<span class="amp">&amp;</span>N Odontología</div>
+        <p>Odontología general y estética para toda la familia en Ciudadela. Precisión, cercanía y resultados que se notan.</p></div>
+      <div class="foot-col"><h4>Contacto</h4>
+        <a href="https://wa.me/5491131552555" target="_blank" rel="noopener">WhatsApp · 11-3155-2555</a>
+        <span>Av. Maipú 3835, Ciudadela</span><span>Buenos Aires, Argentina</span></div>
+      <div class="foot-col"><h4>Horarios</h4>
+        <span>Lunes a Sábados</span><span>9:30 – 19:00 hs</span><span>Domingos cerrado</span></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 C&amp;N Odontología · Atención de niños y adultos particulares.</span>
+      <span>Turnos por WhatsApp · Ciudadela, Buenos Aires</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* preloader → ready */
+function boot(){document.body.classList.add('ready');const l=document.getElementById('loader');if(l){l.classList.add('done');setTimeout(()=>l.remove(),1100);}}
+if(rm){document.body.classList.add('ready');const l=document.getElementById('loader');if(l)l.remove();}
+else{window.addEventListener('load',()=>setTimeout(boot,700));setTimeout(boot,2600);/*fallback*/}
+
+/* menu */
+const burger=document.getElementById('burger');
+burger.addEventListener('click',()=>document.body.classList.toggle('menu-open'));
+document.querySelectorAll('.overlay a').forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('menu-open')));
+
+/* live open/closed status (Lun–Sáb 9:30–19:00) */
+(function(){const s=document.getElementById('status');if(!s)return;const d=new Date();const day=d.getDay();const m=d.getHours()*60+d.getMinutes();
+  const open=day>=1&&day<=6&&m>=570&&m<1140;if(!open){s.classList.add('closed');s.querySelector('span').textContent='Cerrado ahora';}})();
+
+/* scroll: progress + smart nav */
+const nav=document.getElementById('nav'),progress=document.getElementById('progress');
+let lastY=0;
+addEventListener('scroll',()=>{
+  const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+  progress.style.transform=`scaleX(${h>0?y/h:0})`;
+  if(y>lastY&&y>320)nav.classList.add('hide');else nav.classList.remove('hide');
+  lastY=y;
+},{passive:true});
+
+/* reveal */
+const io=new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* count up */
+const cio=new IntersectionObserver((e)=>{e.forEach(x=>{
+  if(!x.isIntersecting)return;const el=x.target,to=+el.dataset.count,suf=el.dataset.suf||'';
+  if(rm){el.textContent=to+suf;cio.unobserve(el);return;}
+  let s=0,st=null;const dur=1400;
+  const step=(t)=>{if(!st)st=t;const p=Math.min((t-st)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);cio.unobserve(el);
+});},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+/* explorer */
+const exItems=document.querySelectorAll('.ex-item'),exPanels=document.querySelectorAll('.ex-panel');
+function setT(i){exItems.forEach(b=>b.classList.toggle('active',+b.dataset.i===i));exPanels.forEach(p=>p.classList.toggle('active',+p.dataset.i===i));}
+exItems.forEach(b=>{b.addEventListener('click',()=>setT(+b.dataset.i));b.addEventListener('mouseenter',()=>{if(matchMedia('(min-width:961px)').matches)setT(+b.dataset.i);});});
+
+/* load real images if present (else keep styled placeholders) */
+document.querySelectorAll('[data-img]').forEach(el=>{
+  const src=el.getAttribute('data-img'),img=new Image();
+  img.onload=()=>{
+    if(el.classList.contains('ex-photo')){el.style.backgroundImage=`linear-gradient(180deg,rgba(15,15,19,.15),rgba(15,15,19,.55)),url('${src}')`;const l=el.querySelector('.ph-lbl');if(l)l.style.display='none';el.querySelectorAll('.ph-tooth,.ph-n').forEach(n=>n.style.display='none');}
+    else{el.style.backgroundImage=`url('${src}')`;const t=el.querySelector('.ba-tooth');if(t)t.style.display='none';}
+  };
+  img.src=src;
+});
+
+/* before/after slider */
+(function(){const ba=document.getElementById('ba');if(!ba)return;let drag=false;
+  const move=(clientX)=>{const r=ba.getBoundingClientRect();let p=(clientX-r.left)/r.width;p=Math.max(0,Math.min(1,p));ba.style.setProperty('--pos',(p*100)+'%');};
+  const down=(e)=>{drag=true;move((e.touches?e.touches[0]:e).clientX);};
+  const mv=(e)=>{if(drag)move((e.touches?e.touches[0]:e).clientX);};
+  const up=()=>drag=false;
+  ba.addEventListener('mousedown',down);addEventListener('mousemove',mv);addEventListener('mouseup',up);
+  ba.addEventListener('touchstart',down,{passive:true});addEventListener('touchmove',mv,{passive:true});addEventListener('touchend',up);
+})();
+
+/* custom cursor + magnetic */
+if(!rm&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const cur=document.getElementById('cur'),dot=document.getElementById('curDot');
+  let cx=innerWidth/2,cy=innerHeight/2,rx=cx,ry=cy;
+  addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.transform=`translate(${cx}px,${cy}px)`;});
+  (function loop(){rx+=(cx-rx)*.18;ry+=(cy-ry)*.18;cur.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop);})();
+  document.querySelectorAll('[data-cur]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cur-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-hover'));
+  });
+  document.querySelectorAll('[data-mag]').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const mx=e.clientX-(r.left+r.width/2),my=e.clientY-(r.top+r.height/2);el.style.transform=`translate(${mx*.22}px,${my*.28}px)`;});
+    el.addEventListener('mouseleave',()=>el.style.transform='');
+  });
+}
+</script>
+</body>
+</html>
