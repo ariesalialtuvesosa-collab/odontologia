@@ -1,5 +1,5 @@
 /* C&N Odontología — service worker (offline + carga instantánea en visitas repetidas) */
-const CACHE = 'cn-odont-v6';
+const CACHE = 'cn-odont-v7';
 const CORE = ['./', './index.html', './favicon-64.png', './manifest.json', './icon-192.png'];
 
 self.addEventListener('install', e => {

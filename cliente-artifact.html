@@ -93,7 +93,7 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1;le
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
 /* ============ PRELOADER ============ */
-.loader{position:fixed;inset:0;z-index:300;background:var(--ink);display:grid;place-items:center;
+.loader{position:fixed;inset:0;z-index:300;background:var(--paper);display:grid;place-items:center;
   transition:transform 1s var(--ease);}
 .loader.done{transform:translateY(-101%)}
 .loader .lmk{font-family:'Space Grotesk',serif;font-size:clamp(48px,9vw,96px);font-weight:600;color:var(--bone);
@@ -130,7 +130,7 @@ body.cur-hover .cur-dot{opacity:0}
 .brand{display:flex;align-items:center;gap:9px}
 .brand-logo{height:40px;width:auto;display:block}
 .loader-logo{width:min(320px,72vw);height:auto;display:block}
-.foot-logo{height:64px;width:auto;display:block;margin-bottom:18px}
+.foot-logo{height:48px;width:auto;display:block;margin-bottom:20px;background:var(--paper);padding:14px 20px;border-radius:16px;box-shadow:0 20px 40px -24px rgba(0,0,0,.5)}
 .brand .mk{font-family:'Space Grotesk',serif;font-weight:600;font-size:23px;letter-spacing:-.02em;line-height:1}
 .brand .mk .amp{font-style:normal;color:var(--accent-deep)}
 .brand .sub{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -647,7 +647,7 @@ html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
 }
 </style>
 <script>document.documentElement.classList.add('js')</script>
-<div class="loader" id="loader"><div class="loader-in"><img class="loader-logo" src="logo-light.png" alt="C&amp;N Odontología" /></div><div class="lbar"></div></div>
+<div class="loader" id="loader"><div class="loader-in"><img class="loader-logo" src="CN_Odontologia_logo_transparente.png" alt="C&amp;N Odontología" /></div><div class="lbar"></div></div>
 <div class="progress" id="progress"></div>
 <div class="grain"></div>
 <div class="cur" id="cur"></div><div class="cur-dot" id="curDot"></div>
@@ -1000,7 +1000,7 @@ html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <div><img class="foot-logo" src="logo-light.png" alt="C&amp;N Odontología" />
+      <div><img class="foot-logo" src="CN_Odontologia_logo_transparente.png" alt="C&amp;N Odontología" />
         <p>Odontología general y estética para toda la familia en Ciudadela. Precisión, cercanía y resultados que se notan.</p></div>
       <div class="foot-col"><h4>Contacto</h4>
         <a href="https://wa.me/5491131552555" target="_blank" rel="noopener">WhatsApp · 11-3155-2555</a>
