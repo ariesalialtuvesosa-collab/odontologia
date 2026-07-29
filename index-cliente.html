@@ -150,6 +150,7 @@
   --bone:#eef3f9;--bone-2:#d3dfe9;--paper:#f3f7fb;  /* claros fríos (#CEDCE6) */
   --accent:#0491bc;      /* cyan del logo */
   --accent-deep:#0e6c90; /* petróleo #126A8D para texto/contraste */
+  --accent-grad:linear-gradient(142deg,#1aa9d6 0%,#0682a6 100%); /* degradé cyan→petróleo del logo */
   --muted:#5c6483;--muted-bone:rgba(238,243,249,.62);
   --line:rgba(35,39,80,.14);--line-2:rgba(35,39,80,.08);--line-bone:rgba(238,243,249,.16);
   --ease:cubic-bezier(.22,1,.36,1);--ease-2:cubic-bezier(.16,1,.3,1);
@@ -223,8 +224,8 @@ body.cur-hover .cur-dot{opacity:0}
   transition:transform .35s var(--ease),box-shadow .5s var(--ease),background .4s var(--ease),color .4s var(--ease)}
 .btn .ico{width:30px;height:30px;display:grid;place-items:center;flex:none;transition:transform .5s var(--ease),background .4s var(--ease)}
 .btn:hover .ico{transform:translate(2px,-2px)}.btn:active{transform:scale(.97)}
-.btn-accent{background:var(--accent);color:var(--ink)}.btn-accent .ico{background:rgba(35,39,80,.12)}
-.btn-accent:hover{box-shadow:0 16px 34px -16px var(--accent-deep)}
+.btn-accent{background:var(--accent-grad);color:#fff}.btn-accent .ico{background:rgba(255,255,255,.2)}
+.btn-accent:hover{box-shadow:0 20px 46px -14px rgba(4,145,188,.6)}
 .btn-ink{background:var(--ink);color:var(--bone)}.btn-ink .ico{background:rgba(238,243,249,.14)}.btn-ink:hover{background:#000}
 .btn-out{background:transparent;color:var(--ink);border:1px solid var(--line);padding:11px 22px}
 .btn-out:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
@@ -499,7 +500,7 @@ footer{background:#191d42;color:var(--muted-bone);padding:80px 0 34px}
 
 /* ============ FLOATING WHATSAPP ============ */
 .wa-fab{position:fixed;right:26px;bottom:26px;z-index:74;width:60px;height:60px;border-radius:50%;
-  background:var(--accent);color:var(--ink);display:grid;place-items:center;
+  background:var(--accent-grad);color:#fff;display:grid;place-items:center;
   box-shadow:0 18px 40px -12px rgba(18,185,138,.65);transform:scale(0);transition:transform .5s var(--ease)}
 .wa-fab.show{transform:scale(1)}
 .wa-fab:hover{transform:scale(1.09)}
@@ -602,7 +603,7 @@ html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
   .mca:active{transform:scale(.97)}
   .mca svg{width:23px;height:23px;flex:none}
   .mca.call{background:var(--ink);color:var(--bone)}
-  .mca.wa{background:var(--accent);color:var(--ink)}
+  .mca.wa{background:var(--accent-grad);color:#fff}
   footer{padding-bottom:118px}
   .wa-fab{display:none}
   .booking-form{padding:32px 24px}
@@ -729,7 +730,7 @@ html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
 </head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
-<div class="loader" id="loader"><div class="loader-in"><img class="loader-logo" src="logo-light.svg" alt="C&amp;N Odontología" /></div><div class="lbar"></div></div>
+<div class="loader" id="loader"><div class="loader-in"><img class="loader-logo" src="logo-light.png" alt="C&amp;N Odontología" /></div><div class="lbar"></div></div>
 <div class="progress" id="progress"></div>
 <div class="grain"></div>
 <div class="cur" id="cur"></div><div class="cur-dot" id="curDot"></div>
@@ -1082,7 +1083,7 @@ html:not(.js) .cur,html:not(.js) .cur-dot{display:none}
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <div><img class="foot-logo" src="logo-light.svg" alt="C&amp;N Odontología" />
+      <div><img class="foot-logo" src="logo-light.png" alt="C&amp;N Odontología" />
         <p>Odontología general y estética para toda la familia en Ciudadela. Precisión, cercanía y resultados que se notan.</p></div>
       <div class="foot-col"><h4>Contacto</h4>
         <a href="https://wa.me/5491131552555" target="_blank" rel="noopener">WhatsApp · 11-3155-2555</a>

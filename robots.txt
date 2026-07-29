@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ariesalialtuvesosa-collab.github.io/odontologia/sitemap.xml
